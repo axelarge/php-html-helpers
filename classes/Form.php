@@ -52,7 +52,7 @@ class Form {
 			$attributes['for'] = static::autoId($fieldName);
 		}
 		if (!isset($attributes['id']) && isset($attributes['for'])) {
-			$attributes['id'] = $attributes['for'] . '_label';
+			$attributes['id'] = $attributes['for'] . '-label';
 		}
 
 		return Html::tag('label', $attributes, $text);
@@ -296,7 +296,7 @@ class Form {
 	{
 		// Don't set an id on collection inputs
 		if (strpos($name, '[]') !== false) {
-			return false;
+			return null;
 		}
 
 		// Hyphenate array keys, for example model[field][other_field] => model-field-other_field

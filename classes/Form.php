@@ -255,6 +255,25 @@ class Form {
 		return Html::tag('select', $attributes, $options_html, false);
 	}
 
+	/**
+	 * Creates a file input field
+	 *
+	 * @static
+	 * @param string $name
+	 * @param array $attributes HTML attributes
+	 * @return string
+	 */
+	public static function file($name, array $attributes = array())
+	{
+		$attributes = array_merge(array(
+			'type' => 'file',
+			'name' => $name,
+			'id'   => static::autoId($name),
+		), $attributes);
+
+		return Html::tag('input', $attributes);
+	}
+
 	public static function button($name, $text, array $attributes = array())
 	{
 		$attributes = array_merge(array(

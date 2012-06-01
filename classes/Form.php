@@ -170,7 +170,7 @@ class Form {
 			'name'  => $name,
 			'type'  => 'hidden',
 			'value' => 0,
-			'id'    => $auto_id . '_hidden',
+			'id'    => $auto_id . '-hidden',
 		);
 		$hidden = Html::tag('input', $hiddenAttributes);
 

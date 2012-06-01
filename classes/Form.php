@@ -133,8 +133,6 @@ class Form {
 		$attributes = array_merge(array(
 			'id'   => static::autoId($name),
 			'name' => $name,
-			'rows' => 8,
-			'cols' => 20,
 		), $attributes);
 
 		return Html::tag('textarea', $attributes, (string)$text);

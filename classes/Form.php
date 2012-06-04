@@ -211,6 +211,54 @@ class Form {
 	}
 
 	/**
+	 * Creates a radio button
+	 *
+	 * @static
+	 * @param string $name
+	 * @param string $value
+	 * @param bool $checked
+	 * @param array $attributes
+	 * @return string
+	 */
+	public static function radio($name, $value, $checked = false, array $attributes = array())
+	{
+		$attributes = array_merge(array(
+			'type'    => 'radio',
+			'name'    => $name,
+			'value'   => $value,
+			'checked' => (bool)$checked,
+		), $attributes);
+
+		return Html::tag('input', $attributes);
+	}
+
+	/**
+	 * Creates multiple radio buttons with labels
+	 *
+	 * @static
+	 * @param string $name
+	 * @param array $collection
+	 * @param mixed $checked Checked value
+	 * @param array $labelAttributes
+	 * @param bool $returnAsArray
+	 * @return array|string
+	 */
+	public static function collectionRadios($name, array $collection, $checked, array $labelAttributes = array(), $returnAsArray = false)
+	{
+		$radioButtons = array();
+		foreach ($collection as $value => $label) {
+			$radioButtons[] = Html::tag(
+				'label',
+				$labelAttributes,
+				Form::radio($name, $value, $value === $checked) . Html::escape($label),
+				false
+			);
+		}
+
+		return $returnAsArray ? $radioButtons : implode('', $radioButtons);
+	}
+
+	/**
 	 * Creates a select tag
 	 * <code>
 	 * select('coffee_id', array('b' => 'black', 'w' => 'white'));

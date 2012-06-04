@@ -240,13 +240,18 @@ class Form {
 
 		$options_html = '';
 		foreach ($collection as $value => $text) {
+			// Special handling of option tag contents to enable indentation with &nbsp;
+			$text = Html::escape($text);
+			$text = str_replace('&amp;nbsp;', '&nbsp;', $text);
+
 			$options_html .= Html::tag(
 				'option',
 				array(
 					'value'    => $value,
 					'selected' => isset($selected[$value]),
 				),
-				$text
+				$text,
+				false
 			);
 		}
 

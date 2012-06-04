@@ -202,7 +202,7 @@ class Form {
 			$checkBoxes[] = Html::tag(
 				'label',
 				$labelAttributes,
-				Form::checkBox("{$name}[]", in_array($value, $checked, true), $value, array(), false) . $label,
+				Form::checkBox("{$name}[]", in_array($value, $checked, true), $value, array(), false) . Html::escape($label),
 				false
 			);
 		}

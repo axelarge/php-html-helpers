@@ -1,5 +1,5 @@
 <?php
-namespace FF\HtmlHelpers;
+namespace Axelarge\HtmlHelpers;
 
 class Html
 {

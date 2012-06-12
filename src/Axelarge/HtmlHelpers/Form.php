@@ -1,5 +1,5 @@
 <?php
-namespace FF\HtmlHelpers;
+namespace Axelarge\HtmlHelpers;
 
 /**
  * Class with static methods for generating form fields

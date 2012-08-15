@@ -261,7 +261,14 @@ class Form {
 	/**
 	 * Creates a select tag
 	 * <code>
+	 * // Simple select
 	 * select('coffee_id', array('b' => 'black', 'w' => 'white'));
+	 *
+	 * // With option groups
+	 * select('beverage', array(
+	 *     'Coffee' => array('bc' => 'black', 'wc' => 'white'),
+	 *     'Tea' => array('gt' => 'Green', 'bt' => 'Black'),
+	 * ));
 	 * </code>
 	 *
 	 * @param string $name Name of the attribute
@@ -286,24 +293,45 @@ class Form {
 			$selected = array();
 		}
 
-		$options_html = '';
-		foreach ($collection as $value => $text) {
-			// Special handling of option tag contents to enable indentation with &nbsp;
-			$text = Html::escape($text);
-			$text = str_replace('&amp;nbsp;', '&nbsp;', $text);
-
-			$options_html .= Html::tag(
-				'option',
-				array(
-					'value'    => $value,
-					'selected' => isset($selected[$value]),
-				),
-				$text,
-				false
-			);
+		$content = '';
+		foreach ($collection as $value => $element) {
+			// Element is an optgroup
+			if (is_array($element) && $element) {
+				$groupHtml = '';
+				foreach ($element as $groupName => $groupElement) {
+					$groupHtml .= self::option($groupName, $groupElement, $selected);
+				}
+				$content .= Html::tag('optgroup', array('label' => $value), $groupHtml, false);
+			} else {
+				$content .= self::option($value, $element, $selected);
+			}
 		}
 
-		return Html::tag('select', $attributes, $options_html, false);
+		return Html::tag('select', $attributes, $content, false);
+	}
+
+	/**
+	 * Creates an option tag
+	 *
+	 * @param string $value
+	 * @param string $label
+	 * @param array $selected
+	 * @return string
+	 */
+	private static function option($value, $label, $selected)
+	{
+		// Special handling of option tag contents to enable indentation with &nbsp;
+		$label = str_replace('&amp;nbsp;', '&nbsp;', Html::escape($label));
+
+		return Html::tag(
+			'option',
+			array(
+				'value'    => $value,
+				'selected' => isset($selected[$value]),
+			),
+			$label,
+			false
+		);
 	}
 
 	/**
